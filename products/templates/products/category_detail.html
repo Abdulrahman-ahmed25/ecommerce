@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block style%}
+
+span{
+
+}
+small{
+    color:red;
+    text-decoration:line-through;
+    font-size:16px
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+{%endblock%}
+{%block content%}
+    <div class="container">
+        <h3>{{object}}</h3>
+        <div class="container" style="background-color: #e9ebee;">
+            <div class="row">
+                {% for object in products%}
+                <div class="col-6 col-md-3 col-lg-2 text-center img-thumbnail" style=" border: 10px solid #e9ebee;">
+                    <div style="padding: 10px; ">
+                    {% include "products/product_card.html" with product=object %}
+                    </div>
+                </div>
+                <!-- {% cycle '' '' '' '' '' '</div><div class="row">'%} -->
+                {% endfor %}
+        
+            </div>
+        
+        
+        </div>
+    </div>
+{%endblock%}

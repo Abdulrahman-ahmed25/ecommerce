@@ -1,0 +1,110 @@
+{% load static %}  
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">  
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>E4C</title>
+        <link href=" {% static 'css/bootstrap.min.css' %}" rel="stylesheet" >
+        <link href=" {% static 'css/font-awesome.min.css' %}" rel="stylesheet" >
+        <link href=" {% static 'css/base.css' %}" rel="stylesheet" >
+        <link rel="icon" href="{% static 'favicon.ico' %}">
+
+    </head>
+    <style>
+      {% block style%}
+      {%endblock%}
+    </style>
+    <body>
+      {% include 'navbar.html'%}
+      <div class="container">
+      {% if messages %}
+      <div class="alert alert-success alert-dismissible text-center" role="alert">
+        {% for message in messages %}
+        <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+        {% endfor %}
+      </div>
+
+      {% endif %}
+    </div>
+      {%block title%}
+      {%endblock%}
+      
+      {%block content%}
+      {%endblock%}
+      
+      <!-- {% include 'footer.html'%} -->
+      <style>
+        .endFooter{
+            background-color: black;
+            color:rgb(196, 192, 192);
+            /* position:sticky;
+            bottom: 0;
+            left: 0;
+            right: 0; */
+        
+        
+        }
+        .endFooter p{
+            font-weight: normal;
+            letter-spacing: 2px;
+            color: #666666;
+            margin: 0;
+        
+        }
+        .endFooter .row{
+            padding: 16px;
+        }
+        
+        .endFooter ul{
+            margin: 0;
+        }
+        .endFooter .sam{
+            text-align: right;
+        }
+        .endFooter ul li{
+            display: inline;
+            font-size: 18px;
+            margin-left: 30px;
+        }
+        .endFooter ul li a{
+            text-decoration: none;
+            color: #666666;
+        
+        }
+        </style>
+        <footer class="endFooter">
+            <div class="container">
+            <div class="row ">
+            <div class="col-sm-6 text-center text-sm-left text-uppercase">
+                <p>&copy;Copyright 2021 E4C</p>
+            </div>
+            <div class="col-sm-6 text-center text-sm-right">
+                <ul class="social-links list-unstyled">
+                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+        
+                </ul>
+                
+            </div>
+            </div>
+        </div>
+        </footer>
+      <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
+      <script src="{% static 'js/popper.min.js' %}"></script>
+      <script src="{% static 'js/bootstrap.min.js' %}"></script>
+      <script>
+        $(document).ready(function(){
+          {% block jquery %}
+
+          {% endblock %}
+
+        });
+      </script>  
+    </body>
+</html>

@@ -1,0 +1,28 @@
+{% extends 'base.html'%}
+{% block style%}
+    .endFooter{
+        position:absolute !important;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        }
+{%endblock%}
+
+    {%block title%}
+    <div class="container" style="padding: 0 10%;">
+    <h1>Login Here</h1>
+    <hr>
+    <br>
+    {%endblock%}
+    {% load crispy_forms_tags %}
+    {%block content%}
+    <form method="POST" class="form-group">{% csrf_token %}
+        {{form|crispy}}
+        <a href="{% url 'reset_password'%}" style="display: block;">forgotten password?</a>
+        <button type="submit"  class="btn btn-success" style="margin: 12px 0;">Login</button>
+        <p >Create New Account <a href="{% url 'signup' %}">here!</a></p>
+    </form>
+
+    </div>
+
+    {%endblock%}

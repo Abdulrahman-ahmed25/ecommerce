@@ -1,0 +1,121 @@
+{% load static %}
+<style>
+.navbar{
+    margin-bottom: 20px;
+    background-color: orange;
+    
+}
+.navbar-light .navbar-nav .nav-link{
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+
+}
+
+
+.navbar-light .navbar-nav .nav-link span{
+    color: #000;
+
+
+}
+.navbar-brand img{
+    border: 5px solid white;
+    border-radius: 50%;
+}
+.shopping-icon{
+    font-size: 28px;
+
+}
+.shopping-icon-span{
+    color:orange !important;
+    background-color: #000;
+    border-radius: 50%;
+    vertical-align:text-top;
+    font-size: 10px;
+    margin-left: -10px;
+
+}
+ .log-item{
+    font-weight: 500;
+    color: orange;
+    text-align: center;
+    text-transform: uppercase;
+    border: 1px solid #fff;
+}
+/*
+.log-item-in{
+    border-top: none;
+    border-bottom: 2px solid rgb(207, 207, 207);
+
+} */
+.settings{
+    color: orange !important;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 14px;
+
+}
+
+</style>
+<!-- start navbar -->
+<nav class="navbar navbar-expand-lg navbar-light" > 
+    <div class="container">
+        <a class="navbar-brand"  href="/" >
+            <img src="{% static 'favicon.ico' %}" alt=""  class="d-inline-block align-top">
+        </a>
+        <form class="d-flex" role="search" method="GET" action='{% url "products:product_list" %}'>
+            <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="q">
+            <button type="submit" style="margin-left: -10px; color: white; background: black; border: none;  border-radius: 10%;"><i class="fa fa-search"></i></button>
+        </form>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <!-- home -->
+            <li class="nav-item">
+                <a class="nav-link " aria-current="page" href="/">Home</a>
+            </li>
+            <!-- settings + logout -->
+            {% if user.is_authenticated %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Hi, {{user}}
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <li><a class="dropdown-item settings" href="{% url 'change_password'%}">change password</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li>
+                    <a class="dropdown-item log-item btn-more" href="{% url 'logout' %}">logout</a>
+                    </li>
+                </ul>
+              </li>
+
+            {% else %}
+            <!-- login -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    log<span class="block">in</span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">  
+                  <li>
+                    <a class="dropdown-item log-item log-item-in btn-more" href="{% url 'login' %}">login</a>
+                  </li>
+                  <li><hr class="dropdown-divider"></li>
+
+                  <li><a class="dropdown-item settings" href="{% url 'signup'%}">Create New Account</a></li>
+
+                </ul>
+              </li>
+
+            {% endif %}
+                <!-- shopping cart -->
+
+                <li class="nav-item">
+                <a class="nav-link " href="#"><i class="fa fa-shopping-cart shopping-icon"><span class="badge shopping-icon-span">10</span></i></a>
+                </li>
+        </ul>
+        </div>
+    </div>
+</nav> 
+<!-- end navbar -->

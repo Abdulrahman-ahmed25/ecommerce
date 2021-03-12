@@ -1,0 +1,9 @@
+{% extends 'base.html'%}
+{% block style%}
+
+{%endblock%}
+{% block content %}
+<h1 class="text-center">All Products |<small style="text-decoration: none;"><a href="{%url 'categories:categories'%}">Categories</a></small></h1>
+{% include "products/products.html"%}
+
+{%endblock%}

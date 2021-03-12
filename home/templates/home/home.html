@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{%block style%}
+    .home_ads{
+        {%if featured_image.make_image_background%}
+        margin-top:-20px;
+        height:60vh;
+        background-color:000;
+        background:linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),url("{{featured_image.image.url}}");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+        {%if featured_image.text_css_color%}
+        color:{{featured_image.text_css_color}};
+        {%endif%}
+        {%endif%}
+
+    }
+    .featured_div{
+        padding-top:6em;
+    }
+    .btn-more{
+        color: #fff !important;;
+        background-color: orange !important;
+        border-color: orange !important;
+    }
+    .btn-more:hover {
+        color: #fff !important;;
+        background-color: orange !important;;
+        border-color: #ff8507a2 !important;}
+    .btn-more:hover {
+        box-shadow: 0 0 0 0.25rem #ff8507a6 !important;;
+
+        }
+    .head-lines{
+        background-color: #ff8507a6;
+        padding: 8px 8px 8px 4px;
+        color:#fff;
+    }
+    .products_list{
+        background-color:#e9ebee;
+        padding:0;
+        margin-top:16px;
+        border-radius:3%;
+    }
+
+{%endblock%}
+{%block content%}
+{% if featured_image %}
+    <div class="home_ads">
+        <div class="container text-center featured_div">
+                    <h1>{{featured_image.title}}</h1>
+                    <!-- <p>{{featured_image.product.description}}</p> -->
+                    <p>
+                        <a class="btn btn-lg btn-more" href="{{featured_image.product.get_absolute_url}}">More Details</a>
+                    </p>
+                <!-- <div class="col-sm-6">
+                    <img src="{{featured_image.image.url}}" class="img-fluid"/>
+                </div> -->
+        </div>
+    </div>
+{%endif%}
+<div class="container products_list">
+<h3 class="head-lines">Recommended Products</h3>
+{% include "products/products.html" with object_list=products_recommended %}
+</div>
+
+<div class="container products_list">
+    <h3 class="head-lines">Featured Products</h3>
+    {% include "products/products.html" with object_list=products_featured col_class_set="col-lg-3"%}
+    </div>
+{%endblock%}

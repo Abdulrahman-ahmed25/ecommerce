@@ -1,0 +1,11 @@
+
+<a href="{{product.get_absolute_url}}" class="product-card related-a">
+   {% if product.get_image_url%}
+      <img style="width: 160px;height: 160px;object-fit: scale-down;" 
+    class="img-fluid " src="{{product.get_image_url}}" alt="{{product.title}}">
+   {% endif %}
+   <h6 style="white-space: nowrap; width: auto; overflow: hidden;text-overflow: ellipsis;">
+      {{product.title}}
+   </h6>
+   {{product.variation_set.first.get_html_price}}
+</a>
