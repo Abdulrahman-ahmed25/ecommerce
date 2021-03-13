@@ -69,50 +69,52 @@ small{
 
       <!-- start rightside from price + variations + add-card +social + related products-->
       <div class="col-lg-4 text-center">
-
+         <form method="GET" action="{% url 'cart' %}">
          {% if object.variation_set.count > 1 %}
          <h5 id='price'>EGP {{object.variation_set.first.price}}></h5>
 
          <!-- start variation select-form -->
-         <select class="form-select variation_select" aria-label="Default select example" style="margin-bottom: 16px;">
-         {% for var_obj in object.variation_set.all%}
-            {%if var_obj.active%}
-               <!-- <option 
-                  data-img="https://www.xda-developers.com/files/2020/06/new-google-photos-logo.jpg"
-                  data-price="{{var_obj.price}}"
-                  value="{{var_obj.id}}">{{var_obj}}
-               </option> -->
-               <option style="visibility: collapse;"
-               data-price="{{var_obj.price}}"
-               data-sale-price="{{var_obj.sale_price}}"
-               data-sale_presentage = "{{var_obj.sale_presentage}}"
-               value="{{var_obj.id}}">
-               {%if var_obj.title == 'Default'%}
-               {{var_obj.title}}
-               {%else%}
-               {{var_obj}}
-               {%endif%}
-            </option>
-            {%endif%}
-         {% endfor %}
-         </select>
+            <select name="item" class="form-select variation_select" aria-label="Default select example" style="margin-bottom: 16px;">
+               {% for var_obj in object.variation_set.all%}
+                  {%if var_obj.active%}
+                     <!-- <option 
+                        data-img="https://www.xda-developers.com/files/2020/06/new-google-photos-logo.jpg"
+                        data-price="{{var_obj.price}}"
+                        value="{{var_obj.id}}">{{var_obj}}
+                     </option> -->
+                     <option style="visibility: collapse;"
+                        data-price="{{var_obj.price}}"
+                        data-sale-price="{{var_obj.sale_price}}"
+                        data-sale_presentage = "{{var_obj.sale_presentage}}"
+                        value="{{var_obj.id}}">
+                        {%if var_obj.title == 'Default'%}
+                        {{var_obj.title}}
+                        {%else%}
+                        {{var_obj.title}}
+                        {%endif%}
+                     </option>
+                  {%endif%}
+               {% endfor %}
+            </select>
          {%else%}
-         <h5>
-            {%if object.variation_set.first.sale_price %}
-            <span class="unique_sale_price" ></span>EGP {{object.variation_set.first.sale_price}}</span>
-            <small class="unique_price">{{object.variation_set.first.price}}</small>
-            <span id="unique_sale" data-sale-price="{{object.variation_set.first.sale_price}}" data-price="{{object.variation_set.first.price}}" style="color:red;background-color: hsla(14, 100%, 53%, 0.2);font-size:14px">
-               -{{object.variation_set.first.sale_presentage}}%
-            </span>
-            {%else%}
-            EGP {{object.variation_set.first.price}}
-            {%endif%}
-         </h5>
+            <input type="hidden" name='item' value='{{object.variation_set.first.id}}'>
+            <h5>
+               {%if object.variation_set.first.sale_price %}
+                  <span class="unique_sale_price" ></span>EGP {{object.variation_set.first.sale_price}}</span>
+                  <small class="unique_price">{{object.variation_set.first.price}}</small>
+                  <span id="unique_sale" data-sale-price="{{object.variation_set.first.sale_price}}" data-price="{{object.variation_set.first.price}}" style="color:red;background-color: hsla(14, 100%, 53%, 0.2);font-size:14px">
+                     -{{object.variation_set.first.sale_presentage}}%
+                  </span>
+               {%else%}
+                  EGP {{object.variation_set.first.price}}
+               {%endif%}
+            </h5>
          {% endif%}
          <!-- start variation select-form  -->
+            <input class ="btn "type="number" value="1" name="qty" style="display: inline; background-color:#f8f9fa;" />
+            <input type='submit' value='Add To Card' class="btn btn-success" style="text-transform: uppercase;"/>
+         </form>
 
-         <a href="#" class="btn btn-success" style="padding: 10px 30%; text-transform: uppercase;">Add To Card</a>
-         
          <br>
          <hr>
          
