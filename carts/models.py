@@ -4,7 +4,7 @@ from django.conf import settings
 from django.db.models.fields.related import ForeignKey
 from products.models import Variation
 from django.urls import reverse
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_save, post_save
 # Create your models here.
 class CartItem(models.Model):
     cart = models.ForeignKey('Cart', on_delete=models.CASCADE)
@@ -32,6 +32,12 @@ def cart_item_pre_save_receiver(sender, instance, *args, **kwargs):
         
 pre_save.connect(cart_item_pre_save_receiver, sender=CartItem)
 
+# to calculate the subtotal
+def cart_item_post_save_receiver(sender, instance, *args, **kwargs):
+    instance.cart.updated_subtotal()
+
+post_save.connect(cart_item_post_save_receiver, sender=CartItem)
+
 class Cart(models.Model):
     #user
     #items
@@ -41,6 +47,15 @@ class Cart(models.Model):
     items = models.ManyToManyField(Variation, through=CartItem)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    subtotal = models.DecimalField(max_digits=20, decimal_places=2)
 
     def __str__(self):
         return str(self.id)
+    
+    def updated_subtotal(self):
+        subtotal = 0
+        items = self.cartitem_set.all()
+        for item in items:
+            subtotal += item.line_item_total
+        self.subtotal = subtotal
+        self.save()
