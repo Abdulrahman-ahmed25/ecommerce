@@ -38,13 +38,7 @@ class Product(models.Model):
     #category and default
     category = models.ManyToManyField('Category', blank=True)
     default  = models.ForeignKey('Category',on_delete=models.CASCADE, related_name='default_category', null=True, blank=True)
-    # owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    # comments = models.ManyToManyField(settings.AUTH_USER_MODEL,
-    #     through='Comment', related_name='comments_owned')
-    
-    # # Favorites
-    # favorites = models.ManyToManyField(settings.AUTH_USER_MODEL,
-    #     through='Fav', related_name='favorite_ads')
+
     objects = ProductManager()
     def __str__(self):
         return self.title
@@ -58,32 +52,6 @@ class Product(models.Model):
         if img:
             return img.image.url
         return img #None
-# class Fav(models.Model) :
-#     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-#     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-
-#     # https://docs.djangoproject.com/en/3.0/ref/models/options/#unique-together
-#     class Meta:
-#         unique_together = ('product', 'user')
-
-#     def __str__(self) :
-#         return '%s likes %s'%(self.user.username, self.product.title[:10])
-
-# class Comment(models.Model) :
-
-#     text = models.TextField(
-#     validators=[MinLengthValidator(3, "Comment must be greater than 3 characters")])
-
-#     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-#     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-
-    # # Shows up in the admin list
-    # def __str__(self):
-    #     if len(self.text) < 15 : return self.text
-    #     return self.text[:11] + ' ...'
 
 import math
 class Variation(models.Model):
@@ -117,8 +85,6 @@ class Variation(models.Model):
 
     def get_html_price(self):
         if self.sale_price is not None:
-            # sale = round(((1 -(int(self.sale_price)/(self.price)))*100),1)
-            # print(sale)
             html_text = f"<span>EGP {int(self.sale_price)} <small>{int(self.price)}</small></span><p style=' width:auto; color:red;background-color: hsla(14, 100%, 53%, 0.2);font-size:14px'>-{self.sale_presentage}%</p>"
         else:
             html_text = f"<span>EGP {int(self.price)}</span>"
